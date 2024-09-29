@@ -2,6 +2,8 @@ package io.learn.reactiveprogramming.flux;
 
 import io.learn.reactiveprogramming.common.Util;
 import io.learn.reactiveprogramming.helper.NameProducer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 
 /**
@@ -10,6 +12,7 @@ import reactor.core.publisher.Flux;
  */
 public class FluxCreateRefactor
 {
+    private static Logger log = LoggerFactory.getLogger(FluxCreateRefactor.class);
     /**
      * The main method that demonstrates the creation and subscription of a custom Flux
      * using a separate NameProducer class.

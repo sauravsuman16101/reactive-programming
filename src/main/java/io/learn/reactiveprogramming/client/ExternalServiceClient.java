@@ -5,6 +5,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
+import java.nio.file.Path;
+
 /**
  * A client for interacting with an external service to retrieve product information.
  * This client uses reactive programming principles and the Reactor library to make
@@ -27,7 +29,8 @@ public class ExternalServiceClient extends AbstractHttpClient
      * @param productId The ID of the product to retrieve the name for.
      * @return A Mono that emits the product name as a String, or an error if the request fails.
      */
-    public Mono<String> getProductName(int productId) {
+    public Mono<String> getProductName(int productId)
+    {
         // Build the URI string using String formatting
         String uri = String.format("/demo01/product/%d", productId);
 
@@ -38,6 +41,15 @@ public class ExternalServiceClient extends AbstractHttpClient
         // Return the Mono<String> representing the aggregated response body
         return httpClient.get()
                 .uri(uri)
+                .responseContent()
+                .asString()
+                .next();
+    }
+
+    public Mono<String> getProductNameByPath(String path)
+    {
+        return httpClient.get()
+                .uri(path)
                 .responseContent()
                 .asString()
                 .next();
