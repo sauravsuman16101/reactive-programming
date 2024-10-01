@@ -2,15 +2,21 @@ package io.learn.reactiveprogramming.common;
 
 import com.github.javafaker.Faker;
 import org.reactivestreams.Subscriber;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.function.UnaryOperator;
 
 /**
  * Utility class providing helper methods for reactive programming examples.
  */
 public class Util
 {
+    private static final Logger log = LoggerFactory.getLogger(Util.class);
+
     // Static instance of Faker for generating fake data
     private static Faker faker = Faker.instance();
 
@@ -88,6 +94,14 @@ public class Util
         {
             throw new RuntimeException(e);
         }
+    }
+
+    public static <T> UnaryOperator<Flux<T>> fluxLogger(String name)
+    {
+        return flux -> flux
+                .doOnSubscribe(s -> log.info("{} subscribed", name))
+                .doOnCancel(() -> log.info("{} cancelled", name))
+                .doOnComplete(() -> log.info("{} completed", name));
     }
 
 }
