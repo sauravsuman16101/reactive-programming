@@ -14,14 +14,14 @@ public class MergePublisher
     public static void main(String[] args)
     {
 
-demo2();
+demo1();
         Util.sleepSeconds(3);
     }
 
     private static void demo1()
     {
         Flux.merge(producer1(), producer2(), producer3())
-                .take(2)
+                //.take(2)
                 .subscribe(Util.subscriber());
     }
 
